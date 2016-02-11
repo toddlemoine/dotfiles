@@ -1,0 +1,39 @@
+[user]
+	name = Todd Lemoine
+	email = todd.lemoine@jivesoftware.com
+[core]
+	excludesfile = /Users/todd.lemoine/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Users/todd.lemoine/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+    default = simple
+[merge]
+    tool = opendiff
+[alias]
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    br = for-each-ref --sort=-committerdate refs/heads/ --format=\"%(committerdate:short) %(refname:short)\"
+    co = checkout
+    cm = commit
+    stat = status -sb
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
+    rmdeleted = !git rm $(git ls-files --deleted)
+    ac = !git add -A && git commit
+    standup = "!git log --since yesterday --author `git config user.email` --pretty=short"
+    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    cob = checkout -b
+    cm = !git add -A && git commit -m
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    undo = reset HEAD~1 --mixed
+    amend = commit -a --amend
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+    bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+    make-fetch-happen = fetch --all -p --tags
+[color]
+    ui = 1

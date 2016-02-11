@@ -1,0 +1,96 @@
+source ~/.vim/bootstrap.vim
+source ~/.vimrc_local
+filetype plugin on
+
+" Disable concealing
+set cole=0
+au FileType * setl cole=0
+
+" Oceanic Next settings
+set t_Co=256
+set background=dark
+let g:airline_theme='oceanicnext'
+syntax enable
+colorscheme OceanicNext
+
+" Sane preferences
+let mapleader=","
+set nowrap
+set number
+set wildmode=full
+set autoindent
+set history=1000
+set undolevels=1000
+set tabstop=2 shiftwidth=2 expandtab
+
+" Auto reload buffers when file changes
+set autoread
+
+" Custom mapping to invoke CtrlP
+let g:ctrlp_map = '<Leader>p'
+
+" Quickly edit and reload the .vimrc
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" Super easy saves
+map <leader>s :w<CR>
+
+" Copy and paste to system clipboard
+map <leader>c "*y
+map <leader>v "*p
+
+" Delete word means delete a word
+nmap <silent>dw daw
+
+" CamelCaseMotion support
+map <leader>H <Plug>CamelCaseMotion_b
+map <leader>L <Plug>CamelCaseMotion_w
+
+" Duplicate a line
+nmap <leader>d Yp
+
+" Mappings to move lines up and down
+nnoremap <S-C-Down> :m .+1<CR>==
+nnoremap <S-C-Up> :m .-2<CR>==
+inoremap <S-C-Down> <Esc>:m .+1<CR>==gi
+inoremap <S-C-Up> <Esc>:m .-2<CR>==gi
+vnoremap <S-C-Down> :m '>+1<CR>gv=gv
+vnoremap <S-C-Up> :m '<-2<CR>gv=gv
+
+" Jump to files under the cursor
+map <leader>g :YcmCompleter GoTo<CR>
+
+" Generate a list of references to what's under the cursor
+map <leader>G :YcmCompleter GoToReferences<CR>
+
+" Skinny guides
+let g:indent_guides_guide_size = 1
+
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" To open a new empty buffer
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>w :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
+" Better split pane navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+

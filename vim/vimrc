@@ -22,9 +22,14 @@ set autoindent
 set history=1000
 set undolevels=1000
 set tabstop=2 shiftwidth=2 expandtab
+set iskeyword-=_
 
 " Auto reload buffers when file changes
 set autoread
+
+" Move linewise
+:nmap j gj
+:nmap k gk
 
 " Custom mapping to invoke CtrlP
 let g:ctrlp_map = '<Leader>p'
@@ -36,6 +41,23 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " Super easy saves
 map <leader>s :w<CR>
 
+" Exit insert mode
+:imap ii <Esc>
+
+" Easier quoting with custom vim surround remaps
+map <leader>' ysiw'
+map <leader>" ysiw"
+map <leader>{ ysiw{
+map <leader>( ysiw(
+map <leader>[ ysiw[
+
+" Insert a single character
+:nnoremap <leader>i :exec "normal i".nr2char(getchar())."\e"<CR>
+:nnoremap <leader>a :exec "normal a".nr2char(getchar())."\e"<CR>
+
+" Add a tag
+map <leader>e Bvg_<c-j>tag<c-j>
+
 " Copy and paste to system clipboard
 map <leader>c "*y
 map <leader>v "*p
@@ -44,8 +66,8 @@ map <leader>v "*p
 nmap <silent>dw daw
 
 " CamelCaseMotion support
-map <leader>H <Plug>CamelCaseMotion_b
-map <leader>L <Plug>CamelCaseMotion_w
+map <leader>b <Plug>CamelCaseMotion_b
+map <leader>w <Plug>CamelCaseMotion_w
 
 " Duplicate a line
 nmap <leader>d Yp
@@ -58,11 +80,18 @@ inoremap <S-C-Up> <Esc>:m .-2<CR>==gi
 vnoremap <S-C-Down> :m '>+1<CR>gv=gv
 vnoremap <S-C-Up> :m '<-2<CR>gv=gv
 
+" Skip to beginning and end of lines
+map <C-Left> 0w
+map <C-Right> $
+
 " Jump to files under the cursor
 map <leader>g :YcmCompleter GoTo<CR>
 
 " Generate a list of references to what's under the cursor
 map <leader>G :YcmCompleter GoToReferences<CR>
+
+" Let Ultisnips and YCM work together
+let g:UltiSnipsExpandTrigger="<c-j>"
 
 " Skinny guides
 let g:indent_guides_guide_size = 1
@@ -82,10 +111,7 @@ nmap <leader>h :bprevious<CR>
 
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
-nmap <leader>w :bp <BAR> bd #<CR>
-
-" Show all open buffers and their status
-nmap <leader>bl :ls<CR>
+nmap <leader>q :bp <BAR> bd #<CR>
 
 " Better split pane navigation
 nnoremap <C-J> <C-W><C-J>
@@ -93,4 +119,17 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Quick buffer list with Ctrl-P
+:nmap ; :CtrlPBuffer<CR>
 
+" Code folding defaults
+set foldmethod=indent
+set nofoldenable
+set foldlevel=1
+set foldnestmax=5
+
+" NERDTree
+map <leader>n :NERDTreeToggle<CR>
+
+" Auto-highlight json
+autocmd BufNewFile,BufRead *.json set ft=javascript

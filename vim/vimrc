@@ -17,6 +17,7 @@ colorscheme OceanicNext
 let mapleader=","
 set nowrap
 set number
+set relativenumber
 set wildmode=full
 set autoindent
 set history=1000
@@ -30,6 +31,8 @@ set autoread
 " Move linewise
 :nmap j gj
 :nmap k gk
+:map <S-Down> 10j
+:map <S-Up> 10k
 
 " Custom mapping to invoke CtrlP
 let g:ctrlp_map = '<Leader>p'
@@ -133,3 +136,9 @@ map <leader>n :NERDTreeToggle<CR>
 
 " Auto-highlight json
 autocmd BufNewFile,BufRead *.json set ft=javascript
+
+" Fix linting errors
+noremap <Leader><Leader>f :Fixmyjs<CR>
+
+" Activate argument wrapping
+nnoremap <silent> <leader>a :ArgWrap<CR>

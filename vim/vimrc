@@ -1,69 +1,158 @@
-source ~/.vim/bootstrap.vim
-source ~/.vimrc_local
-filetype plugin on
+execute pathogen#infect()
+
+" This option stops vim from behaving in a strongly vi -compatible way.
+set nocompatible
+
+" turn on syntax highlighting
+syntax enable
 
 " Disable concealing
 set cole=0
 au FileType * setl cole=0
 
-" Oceanic Next settings
-set t_Co=256
+" vim 7
+" set t_Co=256
+
+" vim 8
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 set background=dark
 let g:airline_theme='oceanicnext'
-syntax enable
 colorscheme OceanicNext
 
-" Sane preferences
-let mapleader=","
-set nowrap
-set number
-set relativenumber
-set wildmode=full
-set autoindent
-set history=1000
-set undolevels=1000
-set tabstop=2 shiftwidth=2 expandtab
-set iskeyword-=_
+" solarized colors - background=dark|light
+" let g:solarized_termcolors=256
+" colorscheme solarized
+
+" change cursor based on mode
+if $TERM_PROGRAM =~ "iTerm"
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+  if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  endif
+else
+  " Use a blinking vertical bar cursor in insert mode, and a blinking block in normal
+  if &term == 'xterm-256color' || &term == 'screen-256color'
+    let &t_SI = "\<Esc>[5 q"
+    let &t_EI = "\<Esc>[1 q"
+  endif
+endif
+
+" Skinny guides
+let g:indent_guides_guide_size = 1
+
+" Avoid warnings about unable to undo
+" set undolevels=1000
 
 " Auto reload buffers when file changes
 set autoread
 
+" if a given file type (perl, ruby, python, c, etc) has its own special auto-indentation rules, use them
+filetype plugin indent on
+
+" Set file encoding
+set encoding=utf-8
+
+" clipboard 
+set clipboard=unnamed
+
+" Show line numbers
+set number
+set relativenumber
+
+"  add a line / column display in the bottom right-hand section of the screen.
+set ruler
+
+" --- Whitespace stuff ---
+set nowrap
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+" backspace should delete over line breaks and such
+set backspace=indent,eol,start
+
+" Do not display whitespace (list/nolist)
+set nolist
+
+" --- Search related ---
+set hlsearch   " highlight search matches
+set incsearch  " enable incremental searching
+set ignorecase " searching is not case sensitive
+set smartcase  " When 'ignorecase' and 'smartcase' are both on, if a pattern contains an uppercase letter, it is case sensitive, otherwise, it is not.
+set gdefault   " search globally by default
+
+" --- command line completion ----
+" Pressing Tab (repeatedly) will autocomplete in command mode
+set wildmenu
+set wildmode=list:longest,list:full
+"do not autocomplete the following
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,node_modules
+
+" allow switching away from modified buffers. will keep the changes to the buffer without writing them to the file
+set hidden
+
+" Status bar - always show
+set laststatus=2
+
+" lightly highlight the current line on which the cursor is placed (turn this off if it gets annoying)
+set cursorline
+
+" lightly highlight the current column in which the cursor is placed (turn this off if it gets annoying)
+" set cursorcolumn
+
+" enable mouse support - sometimes handy
+set mouse=a
+
+" tell vim to scan the file for a modeline that contains in-line vim commands and options, just for that file
+set modeline
+set modelines=10
+
+" Enable indent folding
+set foldenable
+set fdm=indent
+set nofoldenable
+set foldnestmax=10
+set foldlevel=1
+
+" Force vim to make backup copy and overwrite original
+set backupcopy=yes
+
+" Directories for swp files
+set backupdir=~/.vim/backup
+set directory=~/.vim/backup
+
+" When vimrc is edited, reload it
+autocmd! bufwritepost .vimrc source ~/.vimrc
+
+" Show (partial) command in the status line
+set showcmd
+
+let mapleader=","
+
 " Move linewise
 :nmap j gj
 :nmap k gk
-:map <S-Down> 10j
-:map <S-Up> 10k
-
-" Custom mapping to invoke CtrlP
-let g:ctrlp_map = '<Leader>p'
-
-" Quickly edit and reload the .vimrc
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " Super easy saves
 map <leader>s :w<CR>
 
-" Exit insert mode
-:imap ii <Esc>
+" Use jj to leave insert mode
+inoremap jj <Esc>
 
-" Easier quoting with custom vim surround remaps
-map <leader>' ysiw'
-map <leader>" ysiw"
-map <leader>{ ysiw{
-map <leader>( ysiw(
-map <leader>[ ysiw[
+" Use v to leave insert mode while in visual mode
+vnoremap v <esc>
 
-" Insert a single character
-:nnoremap <leader>i :exec "normal i".nr2char(getchar())."\e"<CR>
-:nnoremap <leader>a :exec "normal a".nr2char(getchar())."\e"<CR>
-
-" Add a tag
-map <leader>e Bvg_<c-j>tag<c-j>
-
-" Copy and paste to system clipboard
-map <leader>c "*y
-map <leader>v "*p
+" NOTE: single escape causes vim to start in insert mode on debian9.
+" unhilight on escape escape
+nnoremap <esc><esc> :nohl<cr>
 
 " Delete word means delete a word
 nmap <silent>dw daw
@@ -72,36 +161,47 @@ nmap <silent>dw daw
 map <leader>b <Plug>CamelCaseMotion_b
 map <leader>w <Plug>CamelCaseMotion_w
 
-" Duplicate a line
-nmap <leader>d Yp
+" Easier quoting with custom vim surround remaps
+map <leader>' ysiw'
+map <leader>" ysiw"
+map <leader>{ ysiw{
+map <leader>( ysiw(
+map <leader>[ ysiw[
 
-" Mappings to move lines up and down
-nnoremap <S-C-Down> :m .+1<CR>==
-nnoremap <S-C-Up> :m .-2<CR>==
-inoremap <S-C-Down> <Esc>:m .+1<CR>==gi
-inoremap <S-C-Up> <Esc>:m .-2<CR>==gi
-vnoremap <S-C-Down> :m '>+1<CR>gv=gv
-vnoremap <S-C-Up> :m '<-2<CR>gv=gv
+" Better split pane navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-" Skip to beginning and end of lines
-map <C-Left> 0w
-map <C-Right> $
+" Auto-highlight json
+" autocmd BufNewFile,BufRead *.json set ft=javascript
 
-" Jump to files under the cursor
-map <leader>g :YcmCompleter GoTo<CR>
+" Map Ctrl+Y and Ctrl+E to move Quarter page up/down respectively
+" this overrides normal view scrolling behavior, but I never use that
+" function! ScrollQuarter(move)
+"   let height=winheight(0)
 
-" Generate a list of references to what's under the cursor
-map <leader>G :YcmCompleter GoToReferences<CR>
+"   if a:move == 'up'
+"     let key="k"
+"   else
+"     let key="j"
+"   endif
 
-" Let Ultisnips and YCM work together
-let g:UltiSnipsExpandTrigger="<c-j>"
+"   execute 'normal! ' . height/4 . key
+" endfunction
 
-" Skinny guides
-let g:indent_guides_guide_size = 1
+" nnoremap <C-Y> <up> :call ScrollQuarter('up')<CR>
+" nnoremap <C-E> <down> :call ScrollQuarter('down')<CR>
 
-" This allows buffers to be hidden if you've modified a buffer.
-" This is almost a must if you wish to use buffers in this way.
-set hidden
+" --- NERDTree ---
+" map leader+n to toggle the tree
+map <Leader>n :NERDTreeToggle<CR>
+
+" --- Buffer switching ---
+map <Leader>bf :bnext<cr>
+map <Leader>bb :bprevious<cr>
+map <Leader>bc :Bclose<cr>
 
 " To open a new empty buffer
 nmap <leader>T :enew<cr>
@@ -116,29 +216,46 @@ nmap <leader>h :bprevious<CR>
 " This replicates the idea of closing a tab
 nmap <leader>q :bp <BAR> bd #<CR>
 
-" Better split pane navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" Copy and paste to system clipboard
+map <leader>c "*y
+map <leader>v "*p
 
-" Quick buffer list with Ctrl-P
-:nmap ; :CtrlPBuffer<CR>
+" --- ALE ---
+let g:ale_linters = {'javascript': ['eslint']}
 
-" Code folding defaults
-set foldmethod=indent
-set nofoldenable
-set foldlevel=1
-set foldnestmax=5
+" :ALEFix will try and fix your JS code with ESLint.
+let g:ale_fixers = {'javascript': ['prettier-eslint', 'eslint']}
 
-" NERDTree
-map <leader>n :NERDTreeToggle<CR>
+" fix files automatically on save.
+let g:ale_fix_on_save = 1
 
-" Auto-highlight json
-autocmd BufNewFile,BufRead *.json set ft=javascript
+"--- FZF ---
+set rtp+=~/.fzf
 
-" Fix linting errors
-noremap <Leader><Leader>f :Fixmyjs<CR>
+" map leader+ff to fuzzy find files
+map <Leader>ff :Files<CR>
 
-" Activate argument wrapping
-nnoremap <silent> <leader>a :ArgWrap<CR>
+" map leader+fc to find commits
+map <Leader>fc :Commits<CR>
+
+"--- vim-commentary ---
+" map <leader>c gc
+
+"--- vim-javascript ---
+" do not syntax highlight jsdocs
+let g:javascript_plugin_jsdoc = 0
+
+" --- vim-jsx ---
+" jsx extension is not required for syntax highlighting and indenting
+let g:jsx_ext_required = 0
+
+" --- vim-gutentags ---
+if filereadable('/usr/local/bin/ctags')
+  " homebrew
+  let g:gutentags_ctags_executable = '/usr/local/bin/ctags'
+else
+  let g:gutentags_ctags_executable = 'ctags'
+endif
+
+set statusline+=%{gutentags#statusline()}
+

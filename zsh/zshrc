@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/todd.lemoine/.oh-my-zsh
+export ZSH=/Users/tlemoine/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -11,7 +11,7 @@ ZSH_THEME="lambda-mod"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-completions)
 
 # User configuration
 
@@ -47,12 +47,6 @@ alias j8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8*)'
 export EDITOR=vim
 export PATH="$HOME/bin:$HOME/.rbenv/bin:$HOME/npm/bin:$PATH"
 
-# Can't live without z
-. ~/repos/z/z.sh
-        function precmd () {
-          _z --add "$(pwd -P)"
-        }
-
 # Get a simple webserver. Thanks, Paul Irish!
 function server() {
   local port="${1:-8000}"
@@ -71,9 +65,18 @@ function f() {
     find . -name "$1"
 }
 
-export NVM_DIR="/Users/todd.lemoine/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-nvm use default
-
 # code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 # eval "$(rbenv init -)"
+
+# z
+. /usr/local/etc/profile.d/z.sh
+
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Minimal prompt
+autoload -U promptinit; promptinit
+prompt pure

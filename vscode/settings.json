@@ -1,0 +1,262 @@
+{
+    // Place your settings in this file to overwrite the default settings
+    "workbench.sideBar.location": "left",
+    "window.zoomLevel": 0,
+    "window.nativeTabs": true,
+    "editor.wordWrap": "off",
+    "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 12,
+    "editor.fontLigatures": true,
+    "editor.lineNumbers": "relative",
+    "editor.minimap.enabled": false,
+    "editor.cursorBlinking": "solid",
+    "editor.renderIndentGuides": false,
+    "editor.formatOnSave": false,
+    // "search.useIgnoreFilesByDefault": true,
+    "eslint.autoFixOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": false
+    },
+    "eslint.enable": true,
+    "eslint.options": {
+      "configFile": ".eslintrc.json"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "terminal.integrated.scrollback": 5000,
+    // "prettier.eslintIntegration": true,
+    // Colors
+    "workbench.colorCustomizations": {
+      // "editor.background": "#131c20",
+      // "sideBar.background": "#131c20",
+      // "panel.background": "#131c20"
+    },
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.substituteGlobalFlag": true,
+    "vim.visualstar": true,
+    "vim.insertModeKeyBindings": [
+      {
+        "before": [
+          "j",
+          "j"
+        ],
+        "after": [
+          "<Esc>"
+        ]
+      },
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+      {
+          "before": [
+              "p",
+          ],
+          "after": [
+              "p",
+              "g",
+              "v",
+              "y"
+          ]
+      }
+  ],
+      "vim.normalModeKeyBindingsNonRecursive": [
+      {
+        "before": [
+          "leader",
+          "{"
+        ],
+        "after": [
+          "y", "s", "i", "w", "{"
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "\""
+        ],
+        "after": [
+          "y", "s", "i", "w", "\""
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "'"
+        ],
+        "after": [
+          "y", "s", "i", "w", "'"
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "("
+        ],
+        "after": [
+          "y", "s", "i", "w", "("
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "["
+        ],
+        "after": [
+          "y", "s", "i", "w", "["
+        ]
+      }
+    ],
+    "vim.otherModesKeyBindingsNonRecursive": [
+      {
+        "before": [
+          ":"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "workbench.action.showCommands",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "g",
+          "c"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "editor.action.commentLine",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "p"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "workbench.action.quickOpen",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "l"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "workbench.action.navigateRight",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "h"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "workbench.action.navigateLeft",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "n"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "workbench.action.toggleSidebarVisibility",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "d"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "editor.action.copyLinesDownAction",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "'",
+          "."
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "workbench.action.navigateBack",
+            "args": []
+          }
+        ]
+      },
+      {
+        "before": [
+          "leader",
+          "s"
+        ],
+        "after": [],
+        "commands": [
+          {
+            "command": "workbench.action.files.save",
+            "args": []
+          }
+        ]
+      }
+    ],
+    "vim.leader": ",",
+    "workbench.activityBar.visible": false,
+    "workbench.statusBar.visible": true,
+    "[javascript]": {
+      // "editor.formatOnSave": true,
+      "editor.trimAutoWhitespace": false
+    },
+    "[javascriptreact]": {
+      "editor.formatOnSave": true,
+      "editor.trimAutoWhitespace": false
+    },
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.colorTheme": "Night Owl",
+    "editor.accessibilitySupport": "off",
+    "materialTheme.fixIconsRunning": false,
+    "workbench.iconTheme": "eq-material-theme-icons-ocean",
+    "gitlens.advanced.messages": {
+      "suppressShowKeyBindingsNotice": true
+    },
+    "gitlens.historyExplorer.enabled": true,
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "gitlens.currentLine.enabled": false,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "explorer.confirmDragAndDrop": false,
+    "scm.diffDecorationsGutterWidth": 2,
+    "breadcrumbs.enabled": true,
+    "editor.hover.delay": 400,
+    "explorer.confirmDelete": false,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "python.jediEnabled": false,
+    "vim.easymotionMarkerFontFamily": "Fira Code"
+  }

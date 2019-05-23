@@ -11,19 +11,26 @@ set cole=0
 au FileType * setl cole=0
 
 " vim 7
-" set t_Co=256
+set t_Co=256
 
 " vim 8
 if (has("termguicolors"))
   set termguicolors
 endif
 
-set background=dark
+" set background=dark
+
 let g:airline_theme='oceanicnext'
 colorscheme OceanicNext
+" colorscheme blayu
+" colorscheme deus
+" colorscheme nord
 
 " solarized colors - background=dark|light
 " let g:solarized_termcolors=256
+" let g:solarized_visibility = "high"
+" let g:solarized_contrast = "high"
+" let g:solarized_termtrans = 1
 " colorscheme solarized
 
 " change cursor based on mode
@@ -48,7 +55,7 @@ endif
 let g:indent_guides_guide_size = 1
 
 " Avoid warnings about unable to undo
-" set undolevels=1000
+set undolevels=1000
 
 " Auto reload buffers when file changes
 set autoread
@@ -58,6 +65,9 @@ filetype plugin indent on
 
 " Set file encoding
 set encoding=utf-8
+
+" Use relative path completion, not current working dir
+" :set autochdir
 
 " clipboard 
 set clipboard=unnamed
@@ -175,7 +185,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Auto-highlight json
-" autocmd BufNewFile,BufRead *.json set ft=javascript
+autocmd BufNewFile,BufRead *.json set ft=javascript
 
 " Map Ctrl+Y and Ctrl+E to move Quarter page up/down respectively
 " this overrides normal view scrolling behavior, but I never use that
@@ -199,9 +209,20 @@ nnoremap <C-H> <C-W><C-H>
 map <Leader>n :NERDTreeToggle<CR>
 
 " --- Buffer switching ---
-map <Leader>bf :bnext<cr>
-map <Leader>bb :bprevious<cr>
-map <Leader>bc :Bclose<cr>
+" map <Leader>bf :bnext<cr>
+" map <Leader>bb :bprevious<cr>
+" map <Leader>bc :Bclose<cr>
+
+" Search for 2 chars with easy motion
+nmap s <Plug>(easymotion-s2)
+
+" Use silver searcher with ack.vim
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" map leader+ff to fuzzy find files
+map <Leader>bb :SelectBuf<CR>
 
 " To open a new empty buffer
 nmap <leader>T :enew<cr>
@@ -220,14 +241,11 @@ nmap <leader>q :bp <BAR> bd #<CR>
 map <leader>c "*y
 map <leader>v "*p
 
-" --- ALE ---
-let g:ale_linters = {'javascript': ['eslint']}
-
-" :ALEFix will try and fix your JS code with ESLint.
-let g:ale_fixers = {'javascript': ['prettier-eslint', 'eslint']}
-
-" fix files automatically on save.
-let g:ale_fix_on_save = 1
+" Treat jsx like js
+augroup FiletypeGroup
+  autocmd!
+  au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
 
 "--- FZF ---
 set rtp+=~/.fzf
@@ -237,6 +255,8 @@ map <Leader>ff :Files<CR>
 
 " map leader+fc to find commits
 map <Leader>fc :Commits<CR>
+
+map <Leader>; :Buffers<CR>
 
 "--- vim-commentary ---
 " map <leader>c gc
@@ -249,13 +269,14 @@ let g:javascript_plugin_jsdoc = 0
 " jsx extension is not required for syntax highlighting and indenting
 let g:jsx_ext_required = 0
 
-" --- vim-gutentags ---
-if filereadable('/usr/local/bin/ctags')
-  " homebrew
-  let g:gutentags_ctags_executable = '/usr/local/bin/ctags'
-else
-  let g:gutentags_ctags_executable = 'ctags'
-endif
+" -- vim-elixir hack --
+" au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+" au BufRead,BufNewFile *.eex set filetype=eelixir
+"
 
-set statusline+=%{gutentags#statusline()}
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
+" Format with Prettier on save
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync

@@ -1,36 +1,32 @@
 {
     // Place your settings in this file to overwrite the default settings
+    "files.insertFinalNewline": true,
     "workbench.sideBar.location": "left",
     "window.zoomLevel": 0,
     "window.nativeTabs": true,
     "editor.wordWrap": "off",
     "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontSize": 12,
+    "editor.fontSize": 13,
     "editor.fontLigatures": true,
     "editor.lineNumbers": "relative",
     "editor.minimap.enabled": false,
     "editor.cursorBlinking": "solid",
     "editor.renderIndentGuides": false,
     "editor.formatOnSave": false,
-    // "search.useIgnoreFilesByDefault": true,
-    "eslint.autoFixOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": false
+      "source.organizeImports": false,
+      "source.fixAll.eslint": true
     },
     "eslint.enable": true,
     "eslint.options": {
       "configFile": ".eslintrc.json"
     },
     "emmet.triggerExpansionOnTab": true,
-    "terminal.integrated.scrollback": 5000,
-    // "prettier.eslintIntegration": true,
-    // Colors
-    "workbench.colorCustomizations": {
-      // "editor.background": "#131c20",
-      // "sideBar.background": "#131c20",
-      // "panel.background": "#131c20"
-    },
+    "editor.quickSuggestionsDelay": 50,
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "terminal.integrated.scrollback": 15000,
     "vim.easymotion": true,
+    "vim.sneak": false,
     "vim.incsearch": true,
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": true,
@@ -45,6 +41,15 @@
         ],
         "after": [
           "<Esc>"
+        ]
+      },
+      {
+        "before": [
+          ">",
+          ">"
+        ],
+        "after": [
+          "|", ">", " "
         ]
       },
     ],
@@ -231,24 +236,21 @@
     "workbench.statusBar.visible": true,
     "[javascript]": {
       // "editor.formatOnSave": true,
-      "editor.trimAutoWhitespace": false
+      "editor.trimAutoWhitespace": false,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[javascriptreact]": {
       "editor.formatOnSave": true,
       "editor.trimAutoWhitespace": false
     },
     "workbench.startupEditor": "newUntitledFile",
-    "workbench.colorTheme": "Night Owl",
     "editor.accessibilitySupport": "off",
-    "materialTheme.fixIconsRunning": false,
-    "workbench.iconTheme": "eq-material-theme-icons-ocean",
+    // "workbench.iconTheme": "eq-material-theme-icons-ocean",
     "gitlens.advanced.messages": {
       "suppressShowKeyBindingsNotice": true
     },
-    "gitlens.historyExplorer.enabled": true,
     "gitlens.codeLens.authors.enabled": false,
     "gitlens.hovers.currentLine.over": "line",
-    "gitlens.currentLine.enabled": false,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDragAndDrop": false,
     "scm.diffDecorationsGutterWidth": 2,
@@ -258,5 +260,71 @@
     "gitlens.views.fileHistory.enabled": true,
     "gitlens.views.lineHistory.enabled": true,
     "python.jediEnabled": false,
-    "vim.easymotionMarkerFontFamily": "Fira Code"
+    "vim.easymotionMarkerFontFamily": "Fira Code",
+    "emmet.includeLanguages": {
+      "javascript": "javascriptreact",
+      "jsx-sublime-babel-tags": "javascriptreact"
+    },
+    "emmet.showExpandedAbbreviation": "never",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "editor.tabCompletion": "on",
+    "files.exclude": {
+      "_build": true,
+      "dist": true,
+      "**/.classpath": true,
+      "**/.project": true,
+      "**/.settings": true,
+      "**/.factorypath": true
+    },
+    "search.exclude": {
+      "**/deps": true
+    },
+    "git.autofetch": true,
+    "workbench.fontAliasing": "auto",
+    "terminal.integrated.fontSize": 13,
+    "prettier.semi": false,
+    "editor.tabSize": 2,
+    "debug.console.fontSize": 13,
+    "workbench.tree.indent": 16,
+    "veracode.Auto-Scan on Save": null,
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "problems.showCurrentInStatus": true,
+    "[scss]": {
+      "editor.defaultFormatter": "michelemelluso.code-beautifier"
+    },
+    "workbench.colorTheme": "Noctis",
+    "python.dataScience.sendSelectionToInteractiveWindow": false,
+    "cucumberautocomplete.onTypeFormat": true,
+    "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "vscode.html-language-features"
+    },
+
+    // "workbench.colorCustomizations": {
+    //   "editor.background": "#0e2133",
+    //   "editorGutter.background": "#0e2133",
+    //   "editorGutter.commentRangeForeground": "#5c7b99"
+    // },
+
+    // "editor.tokenColorCustomizations": {
+    //   "comments": "#5c7b99",
+    //   "keywords": "#dfb46a",
+    //   "functions": "#dfb46a",
+    //   "types": "#73b8bf",
+    //   "variables": "#73b8bf",
+    //   "strings": "#73b8bf"
+    // }
+  // Basic settings: turn linter(s) on
+  // "ruby.lint": {
+  //   "rubocop": true,
+  // },
+  // Time (ms) to wait after keypress before running enabled linters. Ensures
+  // linters are only run when typing has finished and not for every keypress
+  // "ruby.lintDebounceTime": 500,
+
+  // "ruby.format": "rubocop",
+  // "editor.formatOnSaveTimeout": 1500
+
   }

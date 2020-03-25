@@ -207,6 +207,7 @@ autocmd BufNewFile,BufRead *.json set ft=javascript
 " --- NERDTree ---
 " map leader+n to toggle the tree
 map <Leader>n :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$', '__pycache']
 
 " --- Buffer switching ---
 " map <Leader>bf :bnext<cr>
@@ -278,5 +279,11 @@ let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_er
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 " Format with Prettier on save
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+" let g:prettier#autoformat = 0
+" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+"
+" Fix files with prettier, and then ESLint.
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_fix_on_save = 1

@@ -1,32 +1,18 @@
-[user]
-	name = Todd Lemoine
-	email = todd.lemoine@jivesoftware.com
+[includeIf "gitdir:~/repos/"]
+  path = .gitconfig-work
+[includeIf "gitdir:~/projects/"]
+  path = .gitconfig-personal
+
 [core]
-	excludesfile = /Users/todd.lemoine/.gitignore_global
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Users/todd.lemoine/Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[push]
-    default = simple
-    
-   [user]
-	name = Todd Lemoine
-	email = tlemoine@jamasoftware.com
-[core]
-	excludesfile = /Users/tlemoine/.gitignore_global
-[difftool "idea"]
-    cmd = idea diff \"$LOCAL\" \"$REMOTE\"
-    path = 
-[mergetool "idea"]
-    cmd = idea \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-    trustExitCode = true
+	excludesfile = /Users/toddlemoine/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [push]
     default = simple
 [merge]
 	tool = opendiff
+[color]
+	ui = true
+
 [alias]
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     br = for-each-ref --sort=-committerdate refs/heads/ --format=\"%(committerdate:short) %(refname:short)\"
@@ -38,16 +24,35 @@
     remotes = remote -v
     rmdeleted = !git rm $(git ls-files --deleted)
     ac = !git add -A && git commit
-    up = !git pull --rebase --prune $@
+    ; up = !git pull --rebase --prune $@
     cm = !git add -A && git commit -m
     undo = reset HEAD~1 --mixed
     amend = commit -a --amend
     history = log -p
-[color]
-    ui = 1
+	  up = "!git remote update -p; git merge --ff-only @{u}"
+
+[pull]
+	rebase = false
+
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+
 [mergetool "sourcetree"]
-	cmd = /Users/tlemoine/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Users/toddlemoine/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	func = 146 bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+

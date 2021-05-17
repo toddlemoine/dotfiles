@@ -14,24 +14,16 @@ au FileType * setl cole=0
 set t_Co=256
 
 " vim 8
-if (has("termguicolors"))
-  set termguicolors
-endif
+set termguicolors
 
-" set background=dark
-
-let g:airline_theme='oceanicnext'
-colorscheme OceanicNext
-" colorscheme blayu
-" colorscheme deus
-" colorscheme nord
-
-" solarized colors - background=dark|light
-" let g:solarized_termcolors=256
-" let g:solarized_visibility = "high"
-" let g:solarized_contrast = "high"
-" let g:solarized_termtrans = 1
-" colorscheme solarized
+set background=dark
+"
+" let g:airline_theme='iceberg'
+" colorscheme blueberry
+"
+let g:airline_theme='nord'
+colorscheme nord
+" colorscheme bluewery
 
 " change cursor based on mode
 if $TERM_PROGRAM =~ "iTerm"
@@ -185,7 +177,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Auto-highlight json
-autocmd BufNewFile,BufRead *.json set ft=javascript
+autocmd BufNewFile,BufRead *.json set ft=json
 
 " Map Ctrl+Y and Ctrl+E to move Quarter page up/down respectively
 " this overrides normal view scrolling behavior, but I never use that
@@ -206,8 +198,10 @@ autocmd BufNewFile,BufRead *.json set ft=javascript
 
 " --- NERDTree ---
 " map leader+n to toggle the tree
+map <Leader>N :NERDTreeFind<CR>
 map <Leader>n :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '__pycache']
+let g:NERDTreeNodeDelimiter = "\u00a0"
 
 " --- Buffer switching ---
 " map <Leader>bf :bnext<cr>
@@ -249,7 +243,10 @@ augroup FiletypeGroup
 augroup END
 
 "--- FZF ---
-set rtp+=~/.fzf
+" set rtp+=/usr/local/bin/fzf
+" set rtp+=~/.fzf
+set rtp+=/usr/local/opt/fzf
+" set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
 
 " map leader+ff to fuzzy find files
 map <Leader>ff :Files<CR>
@@ -257,10 +254,7 @@ map <Leader>ff :Files<CR>
 " map leader+fc to find commits
 map <Leader>fc :Commits<CR>
 
-map <Leader>; :Buffers<CR>
-
-"--- vim-commentary ---
-" map <leader>c gc
+map <Leader>p :BufExplorer<CR>
 
 "--- vim-javascript ---
 " do not syntax highlight jsdocs
@@ -269,6 +263,9 @@ let g:javascript_plugin_jsdoc = 0
 " --- vim-jsx ---
 " jsx extension is not required for syntax highlighting and indenting
 let g:jsx_ext_required = 0
+
+" vim-commentary
+ autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
 
 " -- vim-elixir hack --
 " au BufRead,BufNewFile *.ex,*.exs set filetype=elixir
@@ -280,10 +277,50 @@ let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_
 
 " Format with Prettier on save
 " let g:prettier#autoformat = 0
-" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 "
-" Fix files with prettier, and then ESLint.
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\}
-let g:ale_fix_on_save = 1
+
+" auto format elixir files
+autocmd BufWritePost \*.exs silent :!mix format %
+autocmd BufWritePost \*.ex silent :!mix format %
+
+" Shortcut for pipe operator
+ia pp \|>
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" set filetypes as typescriptreact
+" autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+"
+" YATS requires this
+set re=0

@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/tlemoine/.oh-my-zsh
+export ZSH=/Users/toddlemoine/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -11,12 +11,13 @@ ZSH_THEME="lambda-mod"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-completions)
+plugins=(git zsh-completions dotenv zsh-autosuggestions)
+autoload -U compinit && compinit
 
 # User configuration
+ZSH_DOTENV_FILE=.env.development.local
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-# export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -40,12 +41,23 @@ source $ZSH/oh-my-zsh.sh
 # *****************
 alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.vimrc"
-alias j6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6*)'
-alias j7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7*)'
-alias j8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8*)'
+alias icloud="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/"
+
 
 export EDITOR=vim
 export PATH="$HOME/bin:$HOME/.rbenv/bin:$HOME/npm/bin:$PATH"
+
+export FZF_DEFAULT_COMMAND='ag --hidden -p ~/.gitignore -g ""'
+
+# **********************
+# Work-related vars go here
+# **********************
+
+
+
+# **********************
+# Functions 
+# **********************
 
 # Get a simple webserver. Thanks, Paul Irish!
 function server() {
@@ -69,7 +81,42 @@ function f() {
 # eval "$(rbenv init -)"
 
 # z
-. /usr/local/etc/profile.d/z.sh
+. ~/repos/z/z.sh
+
+# git fuzzy search branch names to checkout
+fbr() {
+  git fetch
+  local branches branch
+  branches=$(git branch -a) &&
+  branch=$(echo "$branches" | fzf +s +m -e) &&
+  git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+}
+
+# Pretty-print a jwt. From https://www.jvt.me/posts/2019/06/13/pretty-printing-jwt-openssl/
+function jwt() {
+  for part in 1 2; do
+    b64="$(cut -f$part -d. <<< "$1" | tr '_-' '/+')"
+    len=${#b64}
+    n=$((len % 4))
+    if [[ 2 -eq n ]]; then
+      b64="${b64}=="
+    elif [[ 3 -eq n ]]; then
+      b64="${b64}="
+    fi
+    d="$(openssl enc -base64 -d -A <<< "$b64")"
+    python -mjson.tool <<< "$d"
+    # don't decode further if this is an encrypted JWT (JWE)
+    if [[ 1 -eq part ]] && grep '"enc":' <<< "$d" >/dev/null ; then
+        exit 0
+    fi
+  done
+}
+
+fd() {
+  preview="git diff $@ --color=always -- {-1}"
+  git diff $@ --name-only | fzf -m --ansi --preview $preview
+}
+
 
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
@@ -80,3 +127,4 @@ export NVM_DIR="$HOME/.nvm"
 # Minimal prompt
 autoload -U promptinit; promptinit
 prompt pure
+

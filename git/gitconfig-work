@@ -1,8 +1,7 @@
 [user]
 	name = Todd Lemoine
 	email = <WORK EMAIL> 
-[commit]
-	template = /Users/toddlemoine/.stCommitMsg
+
 [interactive]
   diffFilter = diff-so-fancy --patch
 

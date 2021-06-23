@@ -44,7 +44,7 @@ alias vimconfig="vim ~/.vimrc"
 alias icloud="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/"
 
 
-export EDITOR=vim
+export EDITOR=nvim
 export PATH="$HOME/bin:$HOME/.rbenv/bin:$HOME/npm/bin:$PATH"
 
 export FZF_DEFAULT_COMMAND='ag --hidden -p ~/.gitignore -g ""'

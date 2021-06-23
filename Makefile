@@ -1,5 +1,8 @@
+current_dir = $(shell pwd)
+
 default:
 	@echo "Available tasks: home, homebrew, apps, services, git, ssh, vim, xcode, download"
+	@echo "current dir $(current_dir)"
 
 home:
 	mkdir ~/repos
@@ -29,9 +32,9 @@ git:
 ssh:
 	open https://github.com/settings/keys
 
-vim:
+vim: FORCE
+	cd ~/.config/nvim/bundle && while read plugin; do git clone git@github.com:$$plugin; done < $(current_dir)/nvim/plugins.txt
 	cp nvim/init.vim ~/.config/nvim/init.vim
-	while read plugin; do git clone git@github.com:$plugin ~/.config/nvim/bundle; done < ./vim/plugins.txt
 	@echo "Edit the Highlighting.vim file and change 3a3a3a to #3a3a3a."
 
 xcode:
@@ -50,3 +53,4 @@ download:
 	@echo "Kensington Trackball: https://www.kensington.com/software/kensingtonworks/"
 	@echo "Kap:                  https://getkap.co/"
 
+FORCE: ;

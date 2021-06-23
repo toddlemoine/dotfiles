@@ -1,7 +1,7 @@
 current_dir = $(shell pwd)
 
 default:
-	@echo "Available tasks: home, homebrew, apps, services, git, ssh, vim, xcode, download"
+	@echo "Available tasks: home, homebrew, apps, services, git, ssh, vim, xcode, download, code"
 	@echo "current dir $(current_dir)"
 
 home:
@@ -36,6 +36,9 @@ vim: FORCE
 	cd ~/.config/nvim/bundle && while read plugin; do git clone git@github.com:$$plugin; done < $(current_dir)/nvim/plugins.txt
 	cp nvim/init.vim ~/.config/nvim/init.vim
 	@echo "Edit the Highlighting.vim file and change 3a3a3a to #3a3a3a."
+
+code: FORCE
+	xargs -n1 code --install-extension < $(current_dir)/vscode/extensions.md
 
 xcode:
 	xcode-select --install

@@ -10,6 +10,7 @@ home:
 	mkdir ~/projects
 	mkdir ~/bin
 	mkdir ~/prefs
+	defaults write com.apple.screencapture location ~/Downloads
 
 homebrew:
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"

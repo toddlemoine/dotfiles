@@ -1,4 +1,5 @@
 current_dir = $(shell pwd)
+current_user = $(shell whoami)
 
 default:
 	@echo "Available tasks: home, homebrew, apps, services, git, ssh, vim, xcode, download, code"
@@ -38,7 +39,7 @@ vim: FORCE
 	@echo "Edit the Highlighting.vim file and change 3a3a3a to #3a3a3a."
 
 code: FORCE
-	cp vscode/settings.json /Users/toddlemoine/Library/Application\ Support/Code/User
+	cp vscode/settings.json /Users/$(current_user)/Library/Application\ Support/Code/User
 	xargs -n1 code --install-extension < $(current_dir)/vscode/extensions.md
 
 xcode:

@@ -2,7 +2,7 @@ current_dir = $(shell pwd)
 current_user = $(shell whoami)
 
 default:
-	@echo "Available tasks: home, homebrew, apps, services, git, ssh, vim, xcode, download, code"
+	@echo "Available tasks: home, homebrew, apps, services, git, ssh, vim, xcode, download, code, shell"
 	@echo "current dir $(current_dir)"
 
 home:
@@ -15,13 +15,13 @@ homebrew:
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 apps:
-	brew install neovim git gh nvm postgres diff-so-fancy zsh fzf ripgrep yarn python ruby elixir pure
-	brew cask install font-fira-code docker slack
+	brew install --formula neovim git gh nvm postgres diff-so-fancy zsh fzf ripgrep yarn python ruby elixir pure the_silver_searcher
+	brew install --cask font-fira-code docker slack
 
 services:
 	brew services start postgres
 
-git:
+git: FORCE
 	cp git/gitconfig ~/.gitconfig
 	cp git/gitconfig-personal ~/.gitconfig-personal
 	cp git/gitconfig-work ~/.gitconfig-work
@@ -32,6 +32,10 @@ git:
 
 ssh:
 	open https://github.com/settings/keys
+
+shell:
+	git clone git@github.com:rupa/z.git ~/repos/z 
+	cp zsh/zshrc ~/.zshrc 
 
 vim: FORCE
 	cd ~/.config/nvim/bundle && while read plugin; do git clone git@github.com:$$plugin; done < $(current_dir)/nvim/plugins.txt

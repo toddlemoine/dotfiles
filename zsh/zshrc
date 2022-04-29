@@ -39,10 +39,10 @@ source $ZSH/oh-my-zsh.sh
 # *****************
 # Custom
 # *****************
-alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.vimrc"
+alias zshconfig="nvim ~/.zshrc"
+alias vimconfig="nvim ~/.vimrc"
 alias icloud="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/"
-
+alias sleepnow="pmset sleepnow"
 
 export EDITOR=nvim
 export PATH="$HOME/bin:$HOME/.rbenv/bin:$HOME/npm/bin:$PATH"
@@ -117,6 +117,15 @@ fd() {
   git diff $@ --name-only | fzf -m --ansi --preview $preview
 }
 
+ts() {
+  CURRENT=`switchaudiosource -c`
+  if [[ $CURRENT == "MacBook Pro Speakers" ]]
+  then
+    switchaudiosource -s "External Headphones"
+  else
+    switchaudiosource -s "MacBook Pro Speakers"
+  fi
+}
 
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"

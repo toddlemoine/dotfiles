@@ -16,8 +16,8 @@ homebrew:
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 apps:
-	brew install --formula neovim git gh nvm postgres diff-so-fancy zsh fzf ripgrep yarn python ruby elixir pure the_silver_searcher
-	brew install --cask font-fira-code docker slack
+	brew install --formula neovim git gh nvm iff-so-fancy zsh fzf ripgrep yarn pure the_silver_searcher switchaudio-osx
+	brew install --cask docker slack
 
 services:
 	brew services start postgres

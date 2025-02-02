@@ -3,6 +3,18 @@ return {
 
   -- Colorscheme
   { "atelierbram/Base2Tone-nvim" },
+  -- Sneak
+  {
+    "justinmk/vim-sneak",
+    opts = {
+      highlight_options = {
+        ctermfg = "red",
+        ctermbg = "yellow",
+        guifg = "red",
+        guibg = "yellow",
+      },
+    },
+  },
   {
     "LazyVim/LazyVim",
     opts = {

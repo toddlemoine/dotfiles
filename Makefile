@@ -2,7 +2,7 @@ current_dir = $(shell pwd)
 current_user = $(shell whoami)
 
 default:
-	@echo "Available tasks: home, homebrew, apps, services, git, ssh, vim, xcode, download, code, shell"
+	@echo "Available tasks: home, homebrew, apps, cli, runtimes, gui, services, work, git, ssh, vim, xcode, download, code, shell, claude"
 	@echo "current dir $(current_dir)"
 
 home:
@@ -15,12 +15,29 @@ home:
 homebrew:
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-apps:
-	brew install --formula neovim git gh nvm iff-so-fancy zsh fzf ripgrep yarn pure the_silver_searcher switchaudio-osx
-	brew install --cask docker slack
+apps: cli runtimes gui
+	@echo "Core setup complete. Run 'make services' to start local services. Run 'make work' for work-specific tools."
 
-services:
-	brew services start postgres
+cli: FORCE
+	brew install --formula ast-grep bat git-delta direnv eza fd fzf gh git glow lazygit neovim pure ripgrep rtk switchaudio-osx tldr uv yarn yq zsh
+
+runtimes: FORCE
+	brew install --formula nvm pyenv rbenv deno
+	@echo "After install: nvm install --lts && nvm use --lts"
+	@echo "Install Go: https://go.dev/dl/"
+	@echo "Install Java via sdkman: curl -s https://get.sdkman.io | bash"
+
+gui: FORCE
+	brew install --cask docker slack jordanbaird-ice
+	@echo "Manual downloads: see README for Bartender, CleanShot X, Rectangle, 1Password, etc."
+
+services: FORCE
+	brew install --formula postgresql redis
+	brew services start postgresql
+	brew services start redis
+
+work: FORCE
+	brew install --formula awscli gradle jira-cli k9s kafka kubernetes-cli
 
 git: FORCE
 	cp git/gitconfig ~/.gitconfig
@@ -54,13 +71,31 @@ xcode:
 
 download:
 	@echo "1Password:            https://1password.com/downloads/mac/"
+	@echo "Bartender:            https://www.macbartender.com/"
+	@echo "CleanShot X:          https://cleanshot.com/"
 	@echo "Clipy:                https://clipy-app.com/"
 	@echo "Code:                 https://code.visualstudio.com/Download"
-	@echo "Sourcetree:           https://www.sourcetreeapp.com/"
-	@echo "Rectangle:            https://rectangleapp.com/"
-	@echo "Quitter:              http://marco.org/appcasts/Quitter.zip"
-	@echo "Bartender:            https://www.macbartender.com/"
-	@echo "Kensington Trackball: https://www.kensington.com/software/kensingtonworks/"
 	@echo "Kap:                  https://getkap.co/"
+	@echo "Kensington Trackball: https://www.kensington.com/software/kensingtonworks/"
+	@echo "Quitter:              http://marco.org/appcasts/Quitter.zip"
+	@echo "Rectangle:            https://rectangleapp.com/"
+	@echo "Sourcetree:           https://www.sourcetreeapp.com/"
+
+claude: FORCE
+	@echo "Installing Claude Code..."
+	npm install -g @anthropic-ai/claude-code
+	@echo "Installing RTK (token optimizer)..."
+	brew install rtk
+	@echo "Copying Claude config..."
+	mkdir -p ~/.claude/skills
+	cp claude/CLAUDE.md ~/.claude/CLAUDE.md
+	cp claude/RTK.md ~/.claude/RTK.md
+	cp claude/settings.json ~/.claude/settings.json
+	cp claude/settings.local.json ~/.claude/settings.local.json
+	cp -r claude/skills/effect_ts ~/.claude/skills/
+	cp -r claude/skills/grill-me ~/.claude/skills/
+	cp -r claude/skills/improve-codebase-architecture ~/.claude/skills/
+	cp -r claude/skills/tdd ~/.claude/skills/
+	@echo "Done. Launch Claude Code and re-install plugins (caveman, atlassian, figma, etc.) on first run."
 
 FORCE: ;

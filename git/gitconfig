@@ -4,55 +4,69 @@
   path = .gitconfig-personal
 
 [core]
-	excludesfile = /Users/toddlemoine/.gitignore_global
-	pager = diff-so-fancy | less --tabs=4 -RFX
+  excludesfile = ~/.gitignore_global
+  pager = delta
+
+[delta]
+  navigate = true
+  side-by-side = true
+
+[interactive]
+  diffFilter = delta --color-only
+
 [push]
-    default = simple
+  default = simple
+
 [merge]
-	tool = opendiff
+  tool = opendiff
+  conflictStyle = zdiff3
+
 [color]
-	ui = true
+  ui = true
 
 [alias]
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    br = for-each-ref --sort=-committerdate refs/heads/ --format=\"%(committerdate:short) %(refname:short)\"
-    co = checkout
-    cm = commit
-    stat = status -sb
-    tags = tag -l
-    branches = branch -a
-    remotes = remote -v
-    rmdeleted = !git rm $(git ls-files --deleted)
-    ac = !git add -A && git commit
-    ; up = !git pull --rebase --prune $@
-    cm = !git add -A && git commit -m
-    undo = reset HEAD~1 --mixed
-    amend = commit -a --amend
-    history = log -p
-	  up = "!git remote update -p; git merge --ff-only @{u}"
+  wt = worktree
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  recent = "!git lg | head -n8"
+  br = for-each-ref --sort=-committerdate refs/heads/ --format=\"%(committerdate:short) %(refname:short)\"
+  co = checkout
+  new = "!f() { git checkout -b tlemoine/$1; }; f"
+  stat = status -sb
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v
+  rmdeleted = !git rm $(git ls-files --deleted)
+  ac = !git add -A && git commit
+  amend = commit -a --amend
+  history = log -p
+  up = "!git remote update -p; git merge --ff-only @{u}"
+  rename = branch -m
+  p = push -u origin $(git branch --show)
+  purge = !git branch -D $(git branch | fzf)
+  q = !git checkout $(git branch | fzf)
 
 [pull]
-	rebase = false
+  rebase = false
 
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
 
 [mergetool "sourcetree"]
-	cmd = /Users/toddlemoine/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = $HOME/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 
+[color "diff"]
+  meta = 11
+  frag = magenta bold
+  func = 146 bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse

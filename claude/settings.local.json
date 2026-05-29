@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Fd:*",
+      "Yq:*",
+      "Delta:*",
+      "Ast-grep:*",
+      "Bash(brew list)",
+      "Bash(brew info)",
+      "Lazygit:*",
+      "Uv:*",
+      "Direnv:*",
+      "Gh:*",
+      "Yarn:*",
+      "Git:*",
+      "Echo:*",
+      "Bash(pip list)",
+      "Bash(pip3 list)",
+      "Docker:*",
+      "Npm:*",
+      "Npx:*",
+      "Fzf:*",
+      "Jq:*",
+      "Bun:*",
+      "Bat:*",
+      "Glow:*",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "Bash(xargs -I {} cat {})"
+    ]
+  }
+}

@@ -23,29 +23,29 @@ return {
 	-- 		vim.cmd.colorscheme("nordic")
 	-- 	end,
 	-- },
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			style = "moon", -- The variant you want
-			transparent = false, -- Set to true if you want your terminal background to show through
-			terminal_colors = true,
-			styles = {
-				sidebars = "dark", -- Sets darker background for Nvim-Tree
-				floats = "dark", -- Sets darker background for popups/Telescope
-			},
-			on_colors = function(colors)
-				-- Optional: If you find it still isn't punchy enough,
-				-- you can manually darken the background here:
-				-- colors.bg = "#1a1b26"
-			end,
-		},
-		config = function(_, opts)
-			require("tokyonight").setup(opts)
-			vim.cmd([[colorscheme tokyonight-moon]])
-		end,
-	},
+	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	opts = {
+	-- 		style = "moon", -- The variant you want
+	-- 		transparent = false, -- Set to true if you want your terminal background to show through
+	-- 		terminal_colors = true,
+	-- 		styles = {
+	-- 			sidebars = "dark", -- Sets darker background for Nvim-Tree
+	-- 			floats = "dark", -- Sets darker background for popups/Telescope
+	-- 		},
+	-- 		on_colors = function(colors)
+	-- 			-- Optional: If you find it still isn't punchy enough,
+	-- 			-- you can manually darken the background here:
+	-- 			-- colors.bg = "#1a1b26"
+	-- 		end,
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("tokyonight").setup(opts)
+	-- 		vim.cmd([[colorscheme tokyonight-moon]])
+	-- 	end,
+	-- },
 
 	-- Modern status line to replace your massive airline config
 	{

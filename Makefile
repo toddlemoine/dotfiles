@@ -32,9 +32,10 @@ gui: FORCE
 	@echo "Manual downloads: see README for Bartender, CleanShot X, Rectangle, 1Password, etc."
 
 services: FORCE
-	brew install --formula postgresql redis
-	brew services start postgresql
-	brew services start redis
+	@echo "Do nothing -- install via Docker"
+	# brew install --formula postgresql redis
+	# brew services start postgresql
+	# brew services start redis
 
 work: FORCE
 	brew install --formula awscli gradle jira-cli k9s kafka kubernetes-cli
@@ -71,7 +72,6 @@ xcode:
 
 download:
 	@echo "1Password:            https://1password.com/downloads/mac/"
-	@echo "Bartender:            https://www.macbartender.com/"
 	@echo "CleanShot X:          https://cleanshot.com/"
 	@echo "Clipy:                https://clipy-app.com/"
 	@echo "Code:                 https://code.visualstudio.com/Download"
